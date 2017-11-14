@@ -20,7 +20,6 @@
   ],
   "dependencies": {
     "purescript-prelude": "^3.1.1",
-    "purescript-console": "^3.0.0",
     "purescript-typelevel-prelude": "^2.5.0",
     "purescript-record": "^0.2.4",
     "purescript-newtype": "^2.0.0",
