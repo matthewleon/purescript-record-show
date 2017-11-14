@@ -1,6 +1,6 @@
 # purescript-record-show
 
-A `Show` instance for records. See `test/Main.purs` for usage.
+The `showRecord` function converts Records to Strings. See `test/Main.purs` for usage.
 
 ## Installation
 
