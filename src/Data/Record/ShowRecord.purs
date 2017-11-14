@@ -1,6 +1,5 @@
 module Data.Record.ShowRecord (
-  ShowRecord(..)
-, class ShowRowList
+  class ShowRowList
 , showRowList
 , showRecord
 ) where
@@ -8,14 +7,10 @@ module Data.Record.ShowRecord (
 import Prelude
 
 import Data.List.Lazy as L
-import Data.Newtype (class Newtype)
 import Data.Record (get, delete)
 import Data.Symbol (class IsSymbol, SProxy(..), reflectSymbol)
 import Type.Prelude (class RowToList, class RowLacks)
 import Type.Row (kind RowList, Nil, Cons, RLProxy(..))
-
-newtype ShowRecord r = ShowRecord r
-derive instance newtypeShowRecord :: Newtype (ShowRecord r) _
 
 class ShowRowList (list :: RowList) (row :: # Type) | list -> row where
   showRowList :: RLProxy list -> Record row -> L.List String
@@ -37,13 +32,12 @@ instance showRowListCons ::
     val = get key rec
     rest = showRowList (RLProxy :: RLProxy listRest) (delete key rec)
 
-instance showShowRecord ::
-  ( RowToList row list
-  , ShowRowList list row
-  ) => Show (ShowRecord (Record row)) where
-  show (ShowRecord rec) = "{ " <> L.intercalate ", " rowListStrs <> " }"
-    where
-    rowListStrs = showRowList (RLProxy ::RLProxy list) rec
-
-showRecord :: forall r. Show (ShowRecord r) => r -> String
-showRecord = show <<< ShowRecord
+showRecord
+  :: forall row list
+   . RowToList row list
+  => ShowRowList list row
+  => Record row
+  -> String
+showRecord rec = "{ " <> L.intercalate ", " rowListStrs <> " }"
+  where
+  rowListStrs = showRowList (RLProxy ::RLProxy list) rec
