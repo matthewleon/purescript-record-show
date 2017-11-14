@@ -1,4 +1,8 @@
-module Data.Record.ShowRecord where
+module Data.Record.ShowRecord (
+  ShowRecord(..)
+, class ShowRowList
+, showRowList
+) where
 
 import Prelude
 
