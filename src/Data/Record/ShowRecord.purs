@@ -2,6 +2,7 @@ module Data.Record.ShowRecord (
   ShowRecord(..)
 , class ShowRowList
 , showRowList
+, showRecord
 ) where
 
 import Prelude
@@ -43,3 +44,6 @@ instance showShowRecord ::
   show (ShowRecord rec) = "{ " <> L.intercalate ", " rowListStrs <> " }"
     where
     rowListStrs = showRowList (RLProxy ::RLProxy list) rec
+
+showRecord :: forall r. Show (ShowRecord r) => r -> String
+showRecord = show <<< ShowRecord
