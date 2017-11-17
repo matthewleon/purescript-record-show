@@ -18,7 +18,23 @@ class ShowRowList (list :: RowList) (row :: # Type) | list -> row where
 instance showRowListNil :: ShowRowList Nil () where
   showRowList _ _ = L.nil
 
-instance showRowListCons :: 
+instance showRowListConsRecord ::
+  ( RowToList subrow sublist
+  , ShowRowList sublist subrow
+  , ShowRowList listRest rowRest
+  , RowCons  key (Record subrow) rowRest rowFull
+  , RowLacks key rowRest
+  , RowToList rowFull (Cons key (Record subrow) listRest)
+  , IsSymbol key
+  ) => ShowRowList (Cons key (Record subrow) listRest) rowFull where
+  showRowList _ rec =
+    (reflectSymbol key <> ": " <> showRecord val) `L.cons` rest
+    where
+    key = SProxy :: SProxy key
+    val = get key rec
+    rest = showRowList (RLProxy :: RLProxy listRest) (delete key rec)
+
+instance showRowListConsShow ::
   ( Show a
   , ShowRowList listRest rowRest
   , RowCons  key a rowRest rowFull
@@ -31,6 +47,7 @@ instance showRowListCons ::
     key = SProxy :: SProxy key
     val = get key rec
     rest = showRowList (RLProxy :: RLProxy listRest) (delete key rec)
+
 
 showRecord
   :: forall row list
