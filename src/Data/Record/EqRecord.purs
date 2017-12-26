@@ -11,7 +11,7 @@ import Data.Symbol (class IsSymbol, SProxy(SProxy))
 import Type.Prelude (class RowToList)
 import Type.Row (kind RowList, Nil, Cons, RLProxy(..))
 
--- | Eq for subrecord given by row list
+-- | Eq for subrecord given by a row list
 class EqRowList (list :: RowList) (row :: # Type) where
   eqRowList :: RLProxy list -> Record row → Record row -> Boolean
 
