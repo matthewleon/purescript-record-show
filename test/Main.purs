@@ -19,3 +19,7 @@ main = do
   assert $ eqRecord {a: 1, b: "b"} {a: 1, b: "b"}
 
   assert $ eqRecord { a: 1, b: { c : "foo" }} {a: 1, b: { c: "foo" }}
+
+  assert $ not eqRecord {a: 2, b: "b"} {a: 1, b: "b"}
+
+  assert $ not eqRecord { a: 1, b: { c : "foo" }} {a: 1, b: { c: "bar" }}
