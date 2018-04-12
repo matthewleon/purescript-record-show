@@ -2,6 +2,12 @@
 
 The `showRecord` function converts Records to Strings. See `test/Main.purs` for usage.
 
+## Deprecation warning
+
+The functionality from this library has been merged into [purescript-record-extra](https://github.com/justinwoo/purescript-record-extra).
+
+Use that instead.
+
 ## Installation
 
 ```
